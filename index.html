@@ -1,0 +1,351 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Net Neutrality Debate Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: header strip with progress and people filter, then four status columns that wrap to one column on phones. */
+:root {
+  --bg: #edf1f5;
+  --panel: #e2e8ee;
+  --surface: #ffffff;
+  --ink: #12202c;
+  --muted: #5a6a78;
+  --line: #cfd8e0;
+  --accent: #0d5f8a;
+  --accent-ink: #ffffff;
+  --st-todo: #8695a3;
+  --st-started: #c98a12;
+  --st-written: #2f6fd0;
+  --st-proofread: #1f8a5b;
+  --p-oriol-bg: #fde7c8; --p-oriol-fg: #7a4306;
+  --p-juli-bg: #e7defa; --p-juli-fg: #4b2a92;
+  --p-nikolas-bg: #cdeee6; --p-nikolas-fg: #0b5a49;
+  --p-noa-bg: #fbdbe4; --p-noa-fg: #8a1f45;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e161d; --panel: #15202a; --surface: #1b2935; --ink: #e5edf3; --muted: #93a4b3; --line: #2a3a48;
+    --accent: #5db8e8; --accent-ink: #08202e;
+    --st-todo: #7f8f9d; --st-started: #e2a93b; --st-written: #6aa0f2; --st-proofread: #45bf8a;
+    --p-oriol-bg: #4a3312; --p-oriol-fg: #f6cf94;
+    --p-juli-bg: #382b5c; --p-juli-fg: #d3c3fb;
+    --p-nikolas-bg: #123f36; --p-nikolas-fg: #9fe4d1;
+    --p-noa-bg: #51213a; --p-noa-fg: #f7b8cd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e161d; --panel: #15202a; --surface: #1b2935; --ink: #e5edf3; --muted: #93a4b3; --line: #2a3a48;
+  --accent: #5db8e8; --accent-ink: #08202e;
+  --st-todo: #7f8f9d; --st-started: #e2a93b; --st-written: #6aa0f2; --st-proofread: #45bf8a;
+  --p-oriol-bg: #4a3312; --p-oriol-fg: #f6cf94;
+  --p-juli-bg: #382b5c; --p-juli-fg: #d3c3fb;
+  --p-nikolas-bg: #123f36; --p-nikolas-fg: #9fe4d1;
+  --p-noa-bg: #51213a; --p-noa-fg: #f7b8cd;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.45;
+  padding-block: 24px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; flex-direction: column; gap: 16px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4vw, 38px); line-height: 1.1; margin: 4px 0 6px; text-wrap: balance; letter-spacing: -.01em; }
+.sub { color: var(--muted); max-width: 62ch; margin: 0; }
+.progress { display: flex; flex-direction: column; gap: 8px; }
+.bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--panel); gap: 2px; }
+.bar span { display: block; min-width: 0; transition: flex-grow .25s ease; }
+.progress-text { font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.people { display: flex; flex-wrap: wrap; gap: 8px; }
+.pchip {
+  font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.pchip small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.pchip[aria-pressed="true"] small { color: inherit; opacity: .85; }
+.note { font-size: 13px; color: var(--muted); min-height: 1.3em; margin: 0; }
+.note.warn { color: var(--st-started); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.board { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; align-items: start; }
+.col { background: var(--panel); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.col-head { display: flex; align-items: center; gap: 8px; padding: 2px 4px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.col-head h2 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin: 0; flex: 1; }
+.count { font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.list { display: flex; flex-direction: column; gap: 10px; min-height: 64px; border-radius: 8px; }
+.list.over { outline: 2px dashed var(--accent); outline-offset: 2px; }
+.empty { font-size: 13px; color: var(--muted); padding: 14px 6px; text-align: center; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card[draggable="true"] { cursor: grab; }
+.card.dragging { opacity: .45; }
+.group { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); overflow-wrap: anywhere; }
+.q { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+.hint { font-size: 12.5px; color: var(--muted); margin: -4px 0 0; overflow-wrap: anywhere; }
+.roles { display: flex; flex-wrap: wrap; gap: 6px 12px; }
+.role { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.who { font-weight: 600; font-size: 13px; padding: 2px 9px; border-radius: 999px; }
+.who.Oriol { background: var(--p-oriol-bg); color: var(--p-oriol-fg); }
+.who.Juli { background: var(--p-juli-bg); color: var(--p-juli-fg); }
+.who.Nikolas { background: var(--p-nikolas-bg); color: var(--p-nikolas-fg); }
+.who.Noa { background: var(--p-noa-bg); color: var(--p-noa-fg); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--muted); border-color: var(--line); font-weight: 500; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) { .bar span { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Debate preparation</div>
+      <h1>Net neutrality question board</h1>
+      <p class="sub">Each question has one writer and one proofreader. The first name writes, the second name proofreads. Drag a card between columns or use its buttons.</p>
+    </div>
+    <div class="progress" aria-label="Overall progress">
+      <div class="bar" id="bar"></div>
+      <div class="progress-text" id="progress-text"></div>
+    </div>
+    <div class="people" id="people" role="group" aria-label="Filter by person"></div>
+    <p class="note" id="note" aria-live="polite"></p>
+  </header>
+  <main class="board" id="board"></main>
+</div>
+
+<script>
+(function () {
+  var PEOPLE = ["Oriol", "Juli", "Nikolas", "Noa"];
+  var COLS = [
+    { id: "todo", label: "Not started", action: null, color: "var(--st-todo)" },
+    { id: "started", label: "Started", action: "Start writing", color: "var(--st-started)" },
+    { id: "written", label: "Written", action: "Mark as written", color: "var(--st-written)" },
+    { id: "proofread", label: "Proof read", action: "Mark as proof read", color: "var(--st-proofread)" }
+  ];
+  var CARDS = [
+    { id: "democracy", g: "Free access to information", q: "Is the free internet good for democracy?", w: "Oriol", r: "Juli" },
+    { id: "speech", g: "Free access to information", q: "Is the free internet necessary for freedom of speech?", w: "Juli", r: "Nikolas" },
+    { id: "education", g: "Free access to information", q: "Does the free internet improve education?", w: "Nikolas", r: "Noa" },
+    { id: "competitive", g: "Allows competitivity", q: "Does the free internet make the ICT sector more competitive?", w: "Noa", r: "Oriol" },
+    { id: "innovative", g: "Allows competitivity", q: "Does the free internet make the ICT sector more innovative?", w: "Noa", r: "Nikolas" },
+    { id: "modify-info", g: "Telecommunications as critical infrastructure", q: "Should ISPs be allowed to modify information in the network? In other words, is the information also in the domain of the networks?", w: "Nikolas", r: "Oriol" },
+    { id: "fair-practices", g: "Telecommunications as critical infrastructure", q: "Which fair practices are the most effective and least restrictive?", w: "Oriol", r: "Juli" },
+    { id: "stomach-cost", g: "Infrastructure costs must not pass to users", q: "Can content providers stomach the additional cost?", w: "Juli", r: "Nikolas" },
+    { id: "cp-growth", g: "Infrastructure costs must not pass to users", q: "Does investment mean growth for content providers?", w: "Nikolas", r: "Noa" },
+    { id: "telco-invest", g: "Infrastructure costs must not pass to users", q: "Does additional investment in telecommunications companies mean more infrastructure?", w: "Noa", r: "Oriol" },
+    { id: "reg-invest", g: "More regulation does not mean less investment", q: "Does more regulation decrease investment?", w: "Oriol", r: "Nikolas" },
+    { id: "reg-innovation", g: "More regulation does not mean less investment", q: "And does it, in turn, decrease innovation in the sector?", w: "Nikolas", r: "Juli" },
+    { id: "qos-current", g: "QoS and lower prices", q: "Can quality of service and lower prices be ensured with current growth and the infrastructure charge?", w: "Juli", r: "Noa" },
+    { id: "qos-priority", g: "QoS and lower prices", q: "Can they be ensured with priority as a service?", w: "Noa", r: "Oriol" },
+    { id: "priority-limit", g: "Priority for critical services", q: "What is the limit?", w: "Oriol", r: "Juli" },
+    { id: "priority-qos", g: "Priority for critical services", q: "When does prioritizing results decrease QoS?", hint: "Also used in the counter-arguments on priority.", w: "Oriol", r: "Noa" },
+    { id: "which-services", g: "Priority for critical services", q: "Which services need to be prioritized?", w: "Juli", r: "Nikolas" },
+    { id: "encourage-infra", g: "More infrastructure", q: "How can improving the infrastructure be encouraged?", w: "Juli", r: "Noa" },
+    { id: "who-pays", g: "More infrastructure", q: "Who pays for it?", hint: "If content providers pay, it feeds the question about stomaching the additional cost.", w: "Juli", r: "Oriol" },
+    { id: "fair-competition", g: "Counter-argument: fair competition", q: "Is it true that fair competition is not guaranteed, for example because large content providers can access greater resources?", w: "Nikolas", r: "Noa" },
+    { id: "isp-money", g: "Counter-argument: more budget does not mean more infrastructure", q: "What have ISPs done with the money previously?", w: "Oriol", r: "Nikolas" },
+    { id: "roi", g: "Counter-argument: more budget does not mean more infrastructure", q: "How much is needed to improve the infrastructure, and what is the return on investment?", w: "Noa", r: "Juli" }
+  ];
+  var STATUS_IDS = COLS.map(function (c) { return c.id; });
+
+  var state = {};
+  var filter = null;
+  var db = null;
+  var canWrite = true;
+
+  var boardEl = document.getElementById("board");
+  var peopleEl = document.getElementById("people");
+  var barEl = document.getElementById("bar");
+  var progTextEl = document.getElementById("progress-text");
+  var noteEl = document.getElementById("note");
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function statusOf(id) { return state[id] || "todo"; }
+  function matches(c) { return !filter || c.w === filter || c.r === filter; }
+  function setNote(kind) {
+    var msg = "";
+    var warn = false;
+    if (kind === "readonly") { msg = "View only. Ask the board owner for Contributor access to move cards."; warn = true; }
+    else if (kind === "local") { msg = "Shared saving is not available here, so moves stay on this screen only."; warn = true; }
+    else if (kind === "error") { msg = "The last move could not be saved. Check your connection and try again."; warn = true; }
+    else if (kind === "shared") { msg = "Moves are saved for everyone with access to this board."; }
+    noteEl.textContent = msg;
+    noteEl.className = warn ? "note warn" : "note";
+  }
+
+  function move(id, to) {
+    if (!canWrite || statusOf(id) === to) return;
+    state[id] = to;
+    render();
+    if (db) {
+      db.doc("cards/" + id).set({ status: to }).then(function () { setNote("shared"); }, function () { setNote("error"); });
+    }
+  }
+
+  function renderProgress() {
+    barEl.textContent = "";
+    var counts = {};
+    STATUS_IDS.forEach(function (s) { counts[s] = 0; });
+    CARDS.forEach(function (c) { counts[statusOf(c.id)]++; });
+    COLS.forEach(function (col) {
+      var seg = el("span");
+      seg.style.background = col.color;
+      seg.style.flexGrow = counts[col.id];
+      seg.style.flexBasis = "0";
+      seg.title = col.label + ": " + counts[col.id];
+      barEl.appendChild(seg);
+    });
+    progTextEl.textContent = counts.proofread + " of " + CARDS.length + " proof read · " + counts.written + " written · " + counts.started + " started · " + counts.todo + " not started";
+  }
+
+  function renderPeople() {
+    peopleEl.textContent = "";
+    var all = el("button", "pchip");
+    all.type = "button";
+    all.setAttribute("aria-pressed", filter ? "false" : "true");
+    all.appendChild(el("span", null, "Everyone"));
+    all.appendChild(el("small", null, CARDS.length + " questions"));
+    all.addEventListener("click", function () { filter = null; render(); });
+    peopleEl.appendChild(all);
+    PEOPLE.forEach(function (p) {
+      var w = CARDS.filter(function (c) { return c.w === p; }).length;
+      var r = CARDS.filter(function (c) { return c.r === p; }).length;
+      var b = el("button", "pchip");
+      b.type = "button";
+      b.setAttribute("aria-pressed", filter === p ? "true" : "false");
+      b.appendChild(el("span", null, p));
+      b.appendChild(el("small", null, "writes " + w + " · proofreads " + r));
+      b.addEventListener("click", function () { filter = filter === p ? null : p; render(); });
+      peopleEl.appendChild(b);
+    });
+  }
+
+  function roleEl(label, name) {
+    var s = el("span", "role");
+    s.appendChild(el("span", null, label));
+    s.appendChild(el("span", "who " + name, name));
+    return s;
+  }
+
+  function cardEl(c, ci) {
+    var card = el("article", "card");
+    card.appendChild(el("div", "group", c.g));
+    card.appendChild(el("p", "q", c.q));
+    if (c.hint) card.appendChild(el("p", "hint", c.hint));
+    var roles = el("div", "roles");
+    roles.appendChild(roleEl("Writes", c.w));
+    roles.appendChild(roleEl("Proofreads", c.r));
+    card.appendChild(roles);
+    if (canWrite) {
+      card.draggable = true;
+      card.addEventListener("dragstart", function (e) {
+        e.dataTransfer.setData("text/plain", c.id);
+        e.dataTransfer.effectAllowed = "move";
+        card.classList.add("dragging");
+      });
+      card.addEventListener("dragend", function () { card.classList.remove("dragging"); });
+      var actions = el("div", "actions");
+      if (ci < COLS.length - 1) {
+        var next = el("button", "btn", COLS[ci + 1].action);
+        next.type = "button";
+        next.addEventListener("click", function () { move(c.id, COLS[ci + 1].id); });
+        actions.appendChild(next);
+      }
+      if (ci > 0) {
+        var back = el("button", "btn ghost", "Back");
+        back.type = "button";
+        back.setAttribute("aria-label", "Move back to " + COLS[ci - 1].label);
+        back.addEventListener("click", function () { move(c.id, COLS[ci - 1].id); });
+        actions.appendChild(back);
+      }
+      card.appendChild(actions);
+    }
+    return card;
+  }
+
+  function render() {
+    boardEl.textContent = "";
+    COLS.forEach(function (col, ci) {
+      var sec = el("section", "col");
+      var items = CARDS.filter(function (c) { return statusOf(c.id) === col.id && matches(c); });
+      var head = el("div", "col-head");
+      var dot = el("span", "dot");
+      dot.style.background = col.color;
+      head.appendChild(dot);
+      head.appendChild(el("h2", null, col.label));
+      head.appendChild(el("span", "count", String(items.length)));
+      sec.appendChild(head);
+      var list = el("div", "list");
+      if (canWrite) {
+        list.addEventListener("dragover", function (e) { e.preventDefault(); list.classList.add("over"); });
+        list.addEventListener("dragleave", function () { list.classList.remove("over"); });
+        list.addEventListener("drop", function (e) {
+          e.preventDefault();
+          list.classList.remove("over");
+          var id = e.dataTransfer.getData("text/plain");
+          if (id) move(id, col.id);
+        });
+      }
+      if (items.length === 0) {
+        list.appendChild(el("div", "empty", filter ? "Nothing here for " + filter + "." : "Nothing here yet."));
+      }
+      items.forEach(function (c) { list.appendChild(cardEl(c, ci)); });
+      sec.appendChild(list);
+      boardEl.appendChild(sec);
+    });
+    renderProgress();
+    renderPeople();
+  }
+
+  async function init() {
+    render();
+    var c = window.claude;
+    if (!c || !c.use) { setNote("local"); return; }
+    var ns = await Promise.all([
+      c.use("db").catch(function () { return null; }),
+      c.use("user").catch(function () { return null; })
+    ]);
+    db = ns[0];
+    var user = ns[1];
+    if (user) {
+      try {
+        var ok = await user.can("data.write");
+        if (ok === false) canWrite = false;
+      } catch (e) {}
+    }
+    if (!db) { setNote("local"); render(); return; }
+    if (!canWrite) { setNote("readonly"); render(); }
+    else setNote("shared");
+    db.collection("cards").onSnapshot(function (snap) {
+      var next = {};
+      snap.docs.forEach(function (d) {
+        var data = d.data();
+        var s = data && data.status;
+        if (STATUS_IDS.indexOf(s) !== -1) next[d.id] = s;
+      });
+      state = next;
+      render();
+    }, function () { setNote("local"); });
+  }
+  init();
+})();
+</script>
+
+</body></html>
